@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace PepperFM\FilamentJson\Columns;
 
 use Filament\Tables\Columns\TextColumn;
-use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Collection;
-use Illuminate\Support\HtmlString;
-use Illuminate\Support\Str;
 
 class JsonColumn extends TextColumn
 {
@@ -20,7 +17,7 @@ class JsonColumn extends TextColumn
 
     protected bool $asDrawer = false;
 
-    public function applyLimit(array|string|null $value): array|string|null|\Illuminate\Support\Stringable
+    public function applyLimit(null|array|string $value): null|array|\Illuminate\Support\Stringable|string
     {
         if (is_string($value)) {
             $characterLimit = $this->getCharacterLimit();
