@@ -28,7 +28,11 @@
                         {{ $key }}
                     </td>
                     <td class="font-mono whitespace-normal p-2">
-                        @include('filament-json::_partials.nested', ['items' => $value])
+                        @if(is_array($value) || $value instanceof \Illuminate\Contracts\Support\Arrayable)
+                            @include('filament-json::_partials.nested', ['items' => $value])
+                        @else
+                            <span class="whitespace-normal">{{ $applyLimit($value) }}</span>
+                        @endif
                     </td>
                 </tr>
             @endforeach
@@ -43,12 +47,11 @@
             <span class="inline-block py-2 pr-1 mr-1 font-bold text-gray-700 whitespace-normal rounded-md dark:text-gray-200 bg-gray-500/10">
                 {{ $key }} :
             </span>
-            @include('filament-json::_partials.nested', ['items' => $value])
-            {{--@if(is_array($value) || $value instanceof \Illuminate\Contracts\Support\Arrayable)
+            @if(is_array($value) || $value instanceof \Illuminate\Contracts\Support\Arrayable)
                 @include('filament-json::_partials.nested', ['items' => $value])
             @else
                 <span class="whitespace-normal">{{ $applyLimit($value) }}</span>
-            @endif--}}
+            @endif
         </p>
     @endforeach
 </div>
