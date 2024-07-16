@@ -8,5 +8,4 @@ use Filament\Tables\Columns\TextColumn;
 
 class JsonColumn extends TextColumn
 {
-
 }
