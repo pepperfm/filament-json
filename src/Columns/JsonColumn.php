@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace PepperFM\FilamentJson\Columns;
 
 use Filament\Tables\Columns\TextColumn;
-use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Collection;
-use Illuminate\Support\HtmlString;
-use Illuminate\Support\Str;
 
 class JsonColumn extends TextColumn
 {
