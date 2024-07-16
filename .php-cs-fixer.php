@@ -226,7 +226,7 @@ $finder = Finder::create()
         __FILE__,
     ])
     ->name('*.php')
-    ->notPath(['vendor'])
+    ->notPath(['vendor', 'tests/src/Models'])
     ->ignoreDotFiles(true)
     ->ignoreVCS(true);
 

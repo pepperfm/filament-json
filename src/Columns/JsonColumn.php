@@ -17,7 +17,7 @@ class JsonColumn extends TextColumn
 
     protected bool $asDrawer = false;
 
-    public function applyLimit(array|string|null $value): array|string|null|\Illuminate\Support\Stringable
+    public function applyLimit(null|array|string $value): null|array|\Illuminate\Support\Stringable|string
     {
         if (is_string($value)) {
             $characterLimit = $this->getCharacterLimit();
@@ -45,12 +45,12 @@ class JsonColumn extends TextColumn
 
     public function getAsModal(): bool
     {
-        return $this->evaluate($this->asModal);
+        return $this->asModal;
     }
 
     public function getAsDrawer(): bool
     {
-        return $this->evaluate($this->asDrawer);
+        return $this->asDrawer;
     }
 
     public function getState(): mixed
