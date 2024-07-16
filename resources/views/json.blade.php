@@ -27,18 +27,9 @@
                     <td class="font-mono py-2">
                         {{ $key }}
                     </td>
-                    <td class="font-mono whitespace-normal p-2">{{ $applyLimit($value) }}</td>
-                    {{--@if(is_array($value))
-                        <td class="whitespace-normal divide-x divide-gray-200 divide-solid dark:divide-gray-700">
-                            @foreach ($value as $nestedKey => $nestedValue)
-                                <td class="inline-block mr-1">
-                                    {{ $nestedKey }}: {{ is_array($nestedValue) ? json_encode($nestedValue) : $applyLimit($nestedValue) }}
-                                </td>
-                            @endforeach
-                        </td>
-                    @else
-                        <td class="whitespace-normal">{{ $applyLimit($value) }}</td>
-                    @endif--}}
+                    <td class="font-mono whitespace-normal p-2">
+                        @include('filament-json::_partials.nested', ['items' => $value])
+                    </td>
                 </tr>
             @endforeach
             </tbody>
@@ -52,17 +43,12 @@
             <span class="inline-block py-2 pr-1 mr-1 font-bold text-gray-700 whitespace-normal rounded-md dark:text-gray-200 bg-gray-500/10">
                 {{ $key }} :
             </span>
-            @if(is_array($value))
-                <span class="whitespace-normal divide-x divide-gray-200 divide-solid dark:divide-gray-700">
-                @foreach ($value as $nestedKey => $nestedValue)
-                    <span class="inline-block mr-1">
-                        {{ $nestedKey }}: {{ is_array($nestedValue) ? json_encode($nestedValue) : $applyLimit($nestedValue) }}
-                    </span>
-                @endforeach
-                </span>
+            @include('filament-json::_partials.nested', ['items' => $value])
+            {{--@if(is_array($value) || $value instanceof \Illuminate\Contracts\Support\Arrayable)
+                @include('filament-json::_partials.nested', ['items' => $value])
             @else
                 <span class="whitespace-normal">{{ $applyLimit($value) }}</span>
-            @endif
+            @endif--}}
         </p>
     @endforeach
 </div>
