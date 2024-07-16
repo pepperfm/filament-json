@@ -1,7 +1,8 @@
 {
     "preset": "laravel",
     "exclude": [
-        "vendor"
+        "vendor",
+        "tests/src/Models"
     ],
     "rules": {
         "array_syntax": true,

@@ -43,8 +43,15 @@ return [
 ## Usage
 
 ```php
-$filamentJson = new PepperFM\FilamentJson();
-echo $filamentJson->echoPhrase('Hello, PepperFM!');
+use PepperFM\FilamentJson\Columns\JsonColumn;
+
+JsonColumn::make('properties');
+
+JsonColumn::make('properties')
+    ->asDrawer();
+
+JsonColumn::make('properties')
+    ->asModal();
 ```
 
 ## Testing
@@ -68,7 +75,8 @@ Please review [our security policy](../../security/policy) on how to report secu
 ## Credits
 
 - [PepperFM](https://github.com/pepperfm)
-- [All Contributors](../../contributors)
+
+[//]: # (- [All Contributors]&#40;../../contributors&#41;)
 
 ## License
 

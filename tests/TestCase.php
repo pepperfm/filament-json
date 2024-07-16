@@ -27,7 +27,7 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn(string $modelName) => 'PepperFM\\FilamentJson\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+            static fn(string $modelName) => 'PepperFM\\FilamentJson\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
         );
     }
 
@@ -50,13 +50,20 @@ class TestCase extends Orchestra
         ];
     }
 
-    public function getEnvironmentSetUp($app)
+    protected function defineDatabaseMigrations(): void
+    {
+        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+    }
+
+    public function getEnvironmentSetUp($app): void
     {
         config()->set('database.default', 'testing');
-
-        /*
-        $migration = include __DIR__.'/../database/migrations/create_filament-json_table.php.stub';
-        $migration->up();
-        */
+        $app['config']->set(
+            'view.paths',
+            array_merge(
+                $app['config']->get('view.paths'),
+                [__DIR__ . '/resources/views']
+            )
+        );
     }
 }
