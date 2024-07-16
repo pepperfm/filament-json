@@ -45,12 +45,12 @@ class JsonColumn extends TextColumn
 
     public function getAsModal(): bool
     {
-        return $this->evaluate($this->asModal);
+        return $this->asModal;
     }
 
     public function getAsDrawer(): bool
     {
-        return $this->evaluate($this->asDrawer);
+        return $this->asDrawer;
     }
 
     public function getState(): mixed
