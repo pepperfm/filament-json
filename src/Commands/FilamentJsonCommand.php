@@ -1,12 +1,14 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+declare(strict_types=1);
+
+namespace PepperFM\FilamentJson\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class FilamentJsonCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'filament-json';
 
     public $description = 'My command';
 

@@ -1,25 +1,25 @@
 <?php
 
-namespace VendorName\Skeleton;
+declare(strict_types=1);
+
+namespace PepperFM\FilamentJson;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 
-class SkeletonPlugin implements Plugin
+class FilamentJsonPlugin implements Plugin
 {
     public function getId(): string
     {
-        return 'skeleton';
+        return 'filament-json';
     }
 
     public function register(Panel $panel): void
     {
-        //
     }
 
     public function boot(Panel $panel): void
     {
-        //
     }
 
     public static function make(): static

@@ -1,35 +1,35 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "pepperfm/filament-json",
+    "description": "Filament plugin for processing JSON field",
     "keywords": [
-        ":vendor_name",
+        "pepperfm",
         "laravel",
-        ":package_slug"
+        "filament-json"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/pepperfm/filament-json",
     "support": {
-        "issues": "https://github.com/:vendor_slug/:package_slug/issues",
-        "source": "https://github.com/:vendor_slug/:package_slug"
+        "issues": "https://github.com/pepperfm/filament-json/issues",
+        "source": "https://github.com/pepperfm/filament-json"
     },
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "PepperFM",
+            "email": "Damon3453@yandex.ru",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "filament/filament": "^3.0",
-        "filament/forms": "^3.0",
-        "filament/tables": "^3.0",
-        "spatie/laravel-package-tools": "^1.15.0"
+        "spatie/laravel-package-tools": "^1.15.0",
+        "illuminate/support": "^10.45|^11.0"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.59",
         "laravel/pint": "^1.0",
         "nunomaduro/collision": "^7.9",
-        "nunomaduro/larastan": "^2.0.1",
+        "larastan/larastan": "^2.0.1",
         "orchestra/testbench": "^8.0",
         "pestphp/pest": "^2.1",
         "pestphp/pest-plugin-arch": "^2.0",
@@ -41,13 +41,12 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "PepperFM\\FilamentJson\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/"
+            "PepperFM\\FilamentJson\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -55,7 +54,14 @@
         "analyse": "vendor/bin/phpstan analyse",
         "test": "vendor/bin/pest",
         "test-coverage": "vendor/bin/pest --coverage",
-        "format": "vendor/bin/pint"
+        "lint": [
+            "@php vendor/bin/pint -v --test",
+            "@php vendor/bin/php-cs-fixer check"
+        ],
+        "lint-hard": [
+            "@php vendor/bin/pint -v",
+            "@php vendor/bin/php-cs-fixer fix --diff -v"
+        ]
     },
     "config": {
         "sort-packages": true,
@@ -67,13 +73,13 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "PepperFM\\FilamentJson\\FilamentJsonServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "FilamentJson": "PepperFM\\FilamentJson\\Facades\\FilamentJson"
             }
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }
