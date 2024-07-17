@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace PepperFM\FilamentJson\Columns;
 
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
+use PepperFM\FilamentJson\Dto\{ButtonConfigDto, ModalConfigDto};
 
 class JsonColumn extends TextColumn
 {
@@ -16,6 +19,21 @@ class JsonColumn extends TextColumn
     protected bool $asModal = false;
 
     protected bool $asDrawer = false;
+
+    protected ButtonConfigDto $buttonConfig;
+
+    protected ModalConfigDto $modalConfig;
+
+    /**
+     * @throws \Exception
+     */
+    public function getTable(): Table
+    {
+        $this->buttonConfig = ButtonConfigDto::make();
+        $this->modalConfig = ModalConfigDto::make();
+
+        return parent::getTable();
+    }
 
     public function applyLimit(null|array|string $value): null|array|\Illuminate\Support\Stringable|string
     {
@@ -43,6 +61,30 @@ class JsonColumn extends TextColumn
         return $this;
     }
 
+    public function button(array|Arrayable|\stdClass $config): static
+    {
+        $this->buttonConfig = ButtonConfigDto::make($config);
+
+        return $this;
+    }
+
+    public function getButtonConfig(): ButtonConfigDto
+    {
+        return $this->buttonConfig;
+    }
+
+    public function modal(array|Arrayable|\stdClass $config): static
+    {
+        $this->modalConfig = ModalConfigDto::make($config);
+
+        return $this;
+    }
+
+    public function getModalConfig(): ModalConfigDto
+    {
+        return $this->modalConfig;
+    }
+
     public function getAsModal(): bool
     {
         return $this->asModal;
@@ -59,7 +101,6 @@ class JsonColumn extends TextColumn
             return null;
         }
         $listLimit = $this->getListLimit();
-
         $state = ($this->getStateUsing !== null) ?
             $this->evaluate($this->getStateUsing) :
             $this->getStateFromRecord();
@@ -70,11 +111,9 @@ class JsonColumn extends TextColumn
                 [] :
                 $state;
         }
-
         if (blank($state)) {
             $state = $this->getDefaultState();
         }
-
         if ($state instanceof Collection) {
             $state = $state->filter()->take($listLimit);
         }

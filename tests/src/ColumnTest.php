@@ -9,7 +9,7 @@ use PepperFM\FilamentJson\Tests\src\Models\User;
 
 use function Pest\Livewire\livewire;
 
-test('can render column', function () {
+test('can render column', function (): void {
     $user = User::factory()->make();
 
     livewire(TestTable::class)
