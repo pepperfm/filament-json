@@ -35,7 +35,7 @@ abstract class BaseDto implements Arrayable
     public static function make(): static
     {
         /* @phpstan-ignore-next-line */
-        return new static(func_get_args());
+        return new static(...func_get_args());
     }
 
     // public function __set(string $name, $value): void
