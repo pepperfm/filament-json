@@ -40,6 +40,68 @@ JsonColumn::make('properties')
     ->asModal();
 ```
 
+### Customize button and modal props:
+```php
+use PepperFM\FilamentJson\Columns\JsonColumn;
+
+$buttonConfig = [
+    'color' => 'warning',
+    'size' => 'xs',
+];
+$modalConfig = literal(
+    icon: 'heroicon-m-sparkles',
+    alignment: 'start',
+    width: 'xl',
+    closedButton: false,
+);
+
+JsonColumn::make('properties')
+    ->asModal()
+    ->button($buttonConfig)
+    ->modal($modalConfig);
+```
+#### The `button()` and `modal()` method accept the type of `array|Arrayable|\stdClass`, and implements basic properties of button and modal blade components from Filament documentation: Core Concepts - Blade Components
+#### Here is the DTO classes that implements components configuration:
+```php
+class ButtonConfigDto
+{
+    public string $color = 'primary';
+
+    public string $icon = 'heroicon-o-swatch';
+
+    public ?string $label = null;
+
+    public ?string $tooltip = null;
+
+    public string $size = 'md';
+
+    public ?string $href = null;
+
+    public ?string $tag = null;
+}
+
+class ModalConfigDto
+{
+    public ?string $id = null;
+
+    public string $icon = 'heroicon-o-swatch';
+
+    public string $iconColor = 'primary';
+
+    public string $alignment = 'start';
+
+    public string $width = 'xl';
+
+    public bool $closeByClickingAway = true;
+
+    public bool $closedByEscaping = true;
+
+    public bool $closedButton = true;
+
+    public bool $autofocus = true;
+}
+```
+
 ## Testing
 
 ```bash
