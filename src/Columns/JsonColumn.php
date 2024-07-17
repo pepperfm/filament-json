@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PepperFM\FilamentJson\Columns;
 
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 use PepperFM\FilamentJson\Dto\{ButtonConfigDto, ModalConfigDto};
@@ -24,15 +23,13 @@ class JsonColumn extends TextColumn
 
     protected ModalConfigDto $modalConfig;
 
-    /**
-     * @throws \Exception
-     */
-    public function getTable(): Table
+    public static function make(string $name): static
     {
-        $this->buttonConfig = ButtonConfigDto::make();
-        $this->modalConfig = ModalConfigDto::make();
+        $static = parent::make($name);
+        $static->buttonConfig = ButtonConfigDto::make();
+        $static->modalConfig = ModalConfigDto::make();
 
-        return parent::getTable();
+        return $static;
     }
 
     public function applyLimit(null|array|string $value): null|array|\Illuminate\Support\Stringable|string
