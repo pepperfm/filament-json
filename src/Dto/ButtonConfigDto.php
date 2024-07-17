@@ -8,7 +8,7 @@ class ButtonConfigDto extends BaseDto
 {
     public string $color = 'primary';
 
-    public string $icon = 'heroicon-m-sparkles';
+    public string $icon = 'heroicon-o-swatch';
 
     public ?string $label = null;
 
