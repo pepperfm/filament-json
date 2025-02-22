@@ -6,6 +6,8 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/pepperfm/filament-json.svg?style=flat-square)](https://packagist.org/packages/pepperfm/filament-json)
 
 
+# [Documentation on my doc. website](https://docs.pepperfm.com/filament-json)
+
 ## Installation
 
 You can install the package via composer:
@@ -79,7 +81,8 @@ class ButtonConfigDto
 
     public ?string $tag = null;
 }
-
+```
+```php
 class ModalConfigDto
 {
     public ?string $id = null;
