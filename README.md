@@ -62,8 +62,10 @@ JsonColumn::make('properties')
     ->button($buttonConfig)
     ->modal($modalConfig);
 ```
-#### The `button()` and `modal()` method accept the type of `array|Arrayable|\stdClass`, and implements basic properties of button and modal blade components from Filament documentation: Core Concepts - Blade Components
-#### Here is the DTO classes that implements components configuration:
+> [!IMPORTANT]
+> The `button()` and `modal()` method accept the type of `array|Arrayable|\stdClass`, and implements basic properties of button and modal blade components from Filament documentation: Core Concepts - Blade Components
+
+#### DTO schemas of components configuration:
 ```php
 class ButtonConfigDto
 {
