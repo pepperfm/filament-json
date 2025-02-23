@@ -42,7 +42,10 @@ JsonColumn::make('properties')
     ->asModal();
 ```
 
-### Customize button and modal props:
+### Customize button and modal props
+> [!IMPORTANT]
+> The `button()` and `modal()` method accept the type of `array|Arrayable|\stdClass`, and implements basic properties of button and modal blade components from Filament documentation: Core Concepts - Blade Components
+
 ```php
 use PepperFM\FilamentJson\Columns\JsonColumn;
 
@@ -63,9 +66,6 @@ JsonColumn::make('properties')
     ->button($buttonConfig)
     ->modal($modalConfig);
 ```
-> [!IMPORTANT]
-> The `button()` and `modal()` method accept the type of `array|Arrayable|\stdClass`, and implements basic properties of button and modal blade components from Filament documentation: Core Concepts - Blade Components
-
 #### DTO schemas of components configuration:
 ```php
 class ButtonConfigDto
