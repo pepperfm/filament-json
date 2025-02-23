@@ -46,16 +46,17 @@ JsonColumn::make('properties')
 ```php
 use PepperFM\FilamentJson\Columns\JsonColumn;
 
-$buttonConfig = [
-    'color' => 'warning',
-    'size' => 'xs',
-];
-$modalConfig = literal(
-    icon: 'heroicon-m-sparkles',
-    alignment: 'start',
-    width: 'xl',
-    closedButton: false,
+$buttonConfig = literal(
+    color: 'primary',
+    size: 'xs'
 );
+$modalConfig = [
+    'icon' => 'heroicon-m-sparkles',
+    'alignment' => 'start',
+    'width' => 'xl',
+    'closedByEscaping' => true,
+    'closed_button' => false, // also accepts camel_case
+];
 
 JsonColumn::make('properties')
     ->asModal()
