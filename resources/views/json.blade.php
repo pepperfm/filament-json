@@ -1,14 +1,24 @@
 @php
+    /** @var ?int $characterLimit */
     $characterLimit = $getCharacterLimit();
+    /** @var bool $asModal */
     $asModal = $getAsModal();
+    /** @var bool $asDrawer */
     $asDrawer = $getAsDrawer();
+
+    /** @var string $keyColumnLabel */
+    $keyColumnLabel = $getKeyColumnLabel();
+    /** @var string $valueColumnLabel */
+    $valueColumnLabel = $getValueColumnLabel();
 
     /** @var \PepperFM\FilamentJson\Dto\ButtonConfigDto $buttonConfig */
     $buttonConfig = $getButtonConfig();
     /** @var \PepperFM\FilamentJson\Dto\ModalConfigDto $modalConfig */
     $modalConfig = $getModalConfig();
+
+    $maxDepth = 2;
 @endphp
-@if($asModal)
+@if($asModal || $asDrawer)
     <x-filament::modal
         :id="$modalConfig->id"
         :icxon="$modalConfig->icon"
@@ -18,7 +28,7 @@
         :close-by-clicking-away="$modalConfig->closeByClickingAway"
         :close-by-escaping="$modalConfig->closedByEscaping"
         :close-button="$modalConfig->closedButton"
-        :slide-over="$asDrawer"
+        :slide-over="$asDrawer && !$asModal"
     >
         <x-slot name="trigger">
             <x-filament::icon-button
@@ -33,26 +43,30 @@
         </x-slot>
 
         <div class="my-2 text-sm tracking-tight divide-y divide-gray-200 dark:divide-white/10">
-            <table
-                class="w-full table-auto divide-y divide-gray-200 dark:divide-white/5"
-            >
+            <table class="w-full table-auto divide-y divide-gray-200 dark:divide-white/5">
                 <thead>
                     <tr>
-                        <th class="px-3 py-2 w-1/2 text-center text-sm font-medium text-gray-700 dark:text-gray-200">Key
+                        <th class="px-3 py-2 w-1/2 text-center text-sm font-medium text-gray-700 dark:text-gray-200">
+                            {{ $keyColumnLabel }}
                         </th>
-                        <th class="px-3 py-2 w-1/2 text-center text-sm font-medium text-gray-700 dark:text-gray-200">Value
+                        <th class="px-3 py-2 w-1/2 text-center text-sm font-medium text-gray-700 dark:text-gray-200">
+                            {{ $valueColumnLabel }}
                         </th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 dark:divide-white/5">
                 @foreach($getState() as $key => $value)
                     <tr class="divide-x divide-gray-200 dark:divide-white/5 rtl:divide-x-reverse">
-                        <td class="font-mono py-2">
-                            {{ $key }}
-                        </td>
-                        <td class="font-mono whitespace-normal p-2">
+                        <td class="font-mono py-2 ">{{ $key }}</td>
+                        <td class="font-mono whitespace-normal p-2 border-b border-gray-300 dark:border-white">
                             @if(is_array($value) || $value instanceof \Illuminate\Contracts\Support\Arrayable)
-                                @include('filament-json::_partials.nested', ['items' => $value])
+                                <div class="nested-value-container p-2 border border-gray-200 dark:border-gray-600 rounded-md mt-2">
+                                    @include('filament-json::_partials.nested', [
+                                        'items' => $value,
+                                        'depth' => 1,
+                                        'maxDepth' => $maxDepth,
+                                    ])
+                                </div>
                             @else
                                 <span class="whitespace-normal">{{ $applyLimit($value) }}</span>
                             @endif

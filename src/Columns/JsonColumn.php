@@ -17,7 +17,13 @@ class JsonColumn extends TextColumn
 
     protected bool $asModal = false;
 
-    protected bool $asDrawer = false;
+    protected bool $asDrawer = true;
+
+    protected bool $filterNullable = true;
+
+    protected string $keyColumnLabel = 'Key';
+
+    protected string $valueColumnLabel = 'Value';
 
     protected ButtonConfigDto $buttonConfig;
 
@@ -45,6 +51,7 @@ class JsonColumn extends TextColumn
 
     public function asModal(bool $condition = true): static
     {
+        $this->asDrawer = false;
         $this->asModal = $condition;
 
         return $this;
@@ -52,7 +59,7 @@ class JsonColumn extends TextColumn
 
     public function asDrawer(bool $condition = true): static
     {
-        $this->asModal = $condition;
+        $this->asModal = false;
         $this->asDrawer = $condition;
 
         return $this;
@@ -77,6 +84,37 @@ class JsonColumn extends TextColumn
         return $this;
     }
 
+    public function keyColumnLabel(string $label = 'Key'): static
+    {
+        $this->keyColumnLabel = $label;
+
+        return $this;
+    }
+
+    public function getKeyColumnLabel(): string
+    {
+        return $this->keyColumnLabel;
+    }
+
+    public function valueColumnLabel(string $label = 'Value'): static
+    {
+        $this->valueColumnLabel = $label;
+
+        return $this;
+    }
+
+    public function getValueColumnLabel(): string
+    {
+        return $this->valueColumnLabel;
+    }
+
+    public function filterNullable(?bool $value = true): static
+    {
+        $this->filterNullable = $value;
+
+        return $this;
+    }
+
     public function getModalConfig(): ModalConfigDto
     {
         return $this->modalConfig;
@@ -90,6 +128,11 @@ class JsonColumn extends TextColumn
     public function getAsDrawer(): bool
     {
         return $this->asDrawer;
+    }
+
+    public function getFilterNullable(): bool
+    {
+        return $this->filterNullable;
     }
 
     public function getState(): mixed
@@ -112,10 +155,16 @@ class JsonColumn extends TextColumn
             $state = $this->getDefaultState();
         }
         if ($state instanceof Collection) {
-            $state = $state->filter()->take($listLimit);
+            $state = $state->when(
+                value: $this->getFilterNullable(),
+                callback: static fn($collection) => $collection->filter()
+            )->take($listLimit);
         }
         if (is_array($state)) {
-            $state = collect($state)->filter()->take($listLimit);
+            $state = collect($state)->when(
+                value: $this->getFilterNullable(),
+                callback: static fn($collection) => $collection->filter()
+            )->take($listLimit);
         }
 
         return $state;
