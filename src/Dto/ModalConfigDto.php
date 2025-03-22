@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PepperFM\FilamentJson\Dto;
 
+use Pepperfm\Ssd\BaseDto;
+
 class ModalConfigDto extends BaseDto
 {
     public ?string $id = null;

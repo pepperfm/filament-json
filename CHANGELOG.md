@@ -1,7 +1,60 @@
 # Changelog
 
-All notable changes to `filament-json` will be documented in this file.
+## 2.0.0 - 22-03-2025
 
-## 1.0.0 - 202X-XX-XX
+### Added feature to display nested data with maxDepth = 2
 
-- initial release
+This json content
+```json
+{
+  "ip": "127.0.0.1",
+  "subdata": {
+    "1": 321,
+    "wow": "123"
+  },
+  "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36...",
+  "fingerprint": null,
+  "subDataArray": [
+    1,
+    2,
+    "test"
+  ]
+}
+```
+should look like:
+![image](./assets/releases/original.webp)
+---
+This json content with this nesting level
+```json
+{
+  "more_nested_array": [
+    "scroll_checking",
+    "scroll_checking2",
+    {
+      "scroll_checking_2_1": 1,
+      "scroll_checking_2_2": {
+        "data": {
+          "some_bool_key": true
+        }
+      }
+    }
+  ],
+  "arrayWithRandomSubData": [
+    1,
+    "2",
+    {
+      "1": 1,
+      "2": "qweqwe",
+      "response": {
+        "data": {
+          "some_bool_key": true
+        }
+      }
+    }
+  ]
+}
+```
+
+should look like:
+
+![image](./assets/releases/nested.webp)
