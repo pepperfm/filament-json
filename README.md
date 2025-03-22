@@ -67,7 +67,7 @@ JsonColumn::make('properties')
 ```
 #### DTO schemas of components configuration:
 ```php
-class ButtonConfigDto
+class ButtonConfigDto extends \Pepperfm\Ssd\BaseDto
 {
     public string $color = 'primary';
 
@@ -85,7 +85,7 @@ class ButtonConfigDto
 }
 ```
 ```php
-class ModalConfigDto
+class ModalConfigDto extends \Pepperfm\Ssd\BaseDto
 {
     public ?string $id = null;
 
@@ -110,7 +110,6 @@ class ModalConfigDto
 ## Testing
 
 ```bash
-
 composer test
 ```
 

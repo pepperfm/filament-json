@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PepperFM\FilamentJson\Dto;
 
+use Pepperfm\Ssd\BaseDto;
+
 class ButtonConfigDto extends BaseDto
 {
     public string $color = 'primary';
