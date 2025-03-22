@@ -5,10 +5,9 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/pepperfm/filament-json/fix-php-code-styling.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/pepperfm/filament-json/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/pepperfm/filament-json.svg?style=flat-square)](https://packagist.org/packages/pepperfm/filament-json)
 
-
-# [Documentation on my doc. website](https://docs.pepperfm.com/filament-json)
-
 ## Installation
+
+[Documentation on my doc. website](https://docs.pepperfm.com/filament-json)
 
 You can install the package via composer:
 
@@ -111,6 +110,7 @@ class ModalConfigDto
 ## Testing
 
 ```bash
+
 composer test
 ```
 
@@ -121,10 +121,6 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 ## Contributing
 
 Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
-
-## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
 
 ## Credits
 
