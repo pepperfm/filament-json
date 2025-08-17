@@ -226,12 +226,12 @@ use Filament\Support\Icons\Heroicon;
 
 $buttonConfig = literal(
     color: 'primary',
-    size: Width::Medium
+    size: Width::Medium->value
 );
 $modalConfig = [
     'icon' => Heroicon::OutlinedSwatch,
     'alignment' => 'start',
-    'width' => Width::Medium,
+    'width' => Width::Medium->value,
     'closedByEscaping' => true,
     'closed_button' => false, // also accepts camel_case
 ];
@@ -279,7 +279,7 @@ class ModalConfigDto extends \Pepperfm\Ssd\BaseDto
 
     public Alignment $alignment = Alignment::Start;
 
-    public Width $width = Width::TwoExtraLarge;
+    public string $width = Width::TwoExtraLarge->value;
 
     public bool $closeByClickingAway = true;
 
