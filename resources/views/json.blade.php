@@ -24,8 +24,6 @@
     $copyJsonAction = $getCopyJsonAction();
     /** @var int $maxDepth */
     $maxDepth = $getMaxDepth();
-    /** @var bool $showHeaders */
-    $showHeaders = $getShowHeaders();
 
     $showExpandCollapse = $renderMode === RenderModeEnum::Tree && $expandAllToggle;
     $showCopy = $copyJsonAction;

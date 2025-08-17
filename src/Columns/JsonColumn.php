@@ -37,8 +37,6 @@ class JsonColumn extends Column
 
     protected bool $copyJsonAction = true;
 
-    protected bool $showHeaders = true;
-
     /* Config DTOs */
     protected ButtonConfigDto $buttonConfig;
 
@@ -136,18 +134,6 @@ class JsonColumn extends Column
     public function getCharacterLimit(): ?int
     {
         return $this->characterLimit;
-    }
-
-    public function showHeaders(bool $on = true): static
-    {
-        $this->showHeaders = $on;
-
-        return $this;
-    }
-
-    public function getShowHeaders(): bool
-    {
-        return $this->showHeaders;
     }
 
     /* Labels (table mode) */
