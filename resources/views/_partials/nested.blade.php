@@ -8,37 +8,28 @@
     $isNestingEnabled = $depth < $maxDepth;
 @endphp
 
-<div>
+<div class="fj-scope">
     @foreach ($items as $nestedKey => $nestedValue)
-        <div
-            @class([
-                'block' => !$isNestingEnabled,
-                'flex' => $isNestingEnabled,
-                'justify-center p-4 my-2 shadow border border-gray-300 dark:border-gray-600 rounded-md',
-           ])
-        >
-            @if($loop->index !== $nestedKey)
-                <pre
-                    @class([
-                        'block border-b border-gray-200 dark:border-gray-600' => !$isNestingEnabled,
-                   ])
-                >{{ $nestedKey }}: </pre>
-            @endif
-            @if (is_array($nestedValue) || $nestedValue instanceof \Illuminate\Contracts\Support\Arrayable)
-                @if ($isNestingEnabled)
-                    <div class="p-2 border border-gray-200 dark:border-gray-600 rounded-md mt-2">
-                        @include('filament-json::_partials.nested', [
-                            'items' => $nestedValue,
-                            'depth' => $depth + 1,
-                            'maxDepth' => $maxDepth,
-                        ])
-                    </div>
+        <div class="fj-pair">
+            <span class="fj-pair-key">{{ is_string($nestedKey) ? $nestedKey : $loop->index }}</span>
+
+            <div class="fj-pair-value">
+                @if (is_array($nestedValue) || $nestedValue instanceof \Illuminate\Contracts\Support\Arrayable)
+                    @if ($isNestingEnabled)
+                        <div class="fj-nested">
+                            @include('filament-json::_partials.nested', [
+                                'items' => $nestedValue,
+                                'depth' => $depth + 1,
+                                'maxDepth' => $maxDepth,
+                            ])
+                        </div>
+                    @else
+                        <span class="fj-force-muted">[Data truncated]</span>
+                    @endif
                 @else
-                    <span class="text-gray-500">[Data truncated]</span>
+                    <span class="fj-code">{{ $applyLimit($nestedValue) }}</span>
                 @endif
-            @else
-                <pre>{{ $applyLimit($nestedValue) }}</pre>
-            @endif
+            </div>
         </div>
     @endforeach
 </div>

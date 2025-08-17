@@ -3,3 +3,78 @@
 @source "../views/**/*.blade.php";
 @source "../views/_partials/**/*.blade.php";
 @source "../../src/**/*.php";
+
+/* variables scopes ====== */
+@layer utilities {
+    .fj-scope {
+        --fj-fg: var(--fi-color-foreground, #111827); /* gray-900 */
+        --fj-muted: var(--fi-color-muted-foreground, #374151); /* gray-700 */
+        --fj-border: var(--fi-color-border, #e5e7eb); /* gray-200 */
+        --fj-surface: var(--fi-color-surface, #ffffff);
+    }
+}
+
+/* ====== components styles ====== */
+@layer components {
+    .fj {
+        @apply my-2 text-sm tracking-tight;
+    }
+
+    .fj-table {
+        @apply w-full table-auto;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .fj-thead-th {
+        @apply px-3 py-2 text-center text-sm font-medium;
+        color: var(--fj-muted);
+    }
+
+    .fj-row {
+        border-top: 1px solid var(--fj-border);
+    }
+
+    .fj-row:first-child {
+        border-top-width: 0;
+    }
+
+    .fj-row > .fj-cell + .fj-cell {
+        border-inline-start: 1px solid var(--fj-border);
+    }
+
+    .fj-cell {
+        @apply p-2 align-top font-mono;
+        color: var(--fj-fg);
+    }
+
+    .fj-key-badge {
+        @apply inline-block rounded-md py-2 pr-1 font-bold;
+        color: var(--fj-muted);
+        background-color: rgb(107 114 128 / 0.10);
+    }
+
+    .fj-nested {
+        @apply mt-2 rounded-md p-2;
+        border: 1px solid var(--fj-border);
+        background-color: var(--fj-surface);
+    }
+
+    .fj-nested .fj-nested {
+        @apply mt-2 rounded-md;
+    }
+
+    /* чуть мягче на глубине */
+}
+
+@layer utilities {
+    .fj-force-fg {
+        color: var(--fj-fg) !important;
+        opacity: 1 !important;
+    }
+
+    .fj-force-muted {
+        color: var(--fj-muted) !important;
+        opacity: 1 !important;
+    }
+}
