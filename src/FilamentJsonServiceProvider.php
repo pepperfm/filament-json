@@ -106,7 +106,7 @@ class FilamentJsonServiceProvider extends PackageServiceProvider
     {
         return [
             // AlpineComponent::make('filament-json', __DIR__ . '/../resources/dist/components/filament-json.js'),
-            // Css::make('filament-json-styles', __DIR__ . '/../resources/dist/filament-json.css'),
+            Css::make('filament-json-styles', __DIR__ . '/../resources/dist/filament-json.css'),
             // Js::make('filament-json-scripts', __DIR__ . '/../resources/dist/filament-json.js'),
         ];
     }

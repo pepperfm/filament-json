@@ -13,3 +13,4 @@ testbench.yaml
 vendor
 .php_cs
 .phpunit.cache
+bun.lock

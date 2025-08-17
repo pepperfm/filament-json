@@ -5,6 +5,7 @@
         "tests/src/Models"
     ],
     "rules": {
+        "simplified_null_return": true,
         "array_syntax": true,
         "single_line_empty_body": false,
         "braces": {
@@ -15,7 +16,7 @@
             "single_line": true,
             "single_item_single_line": true,
             "multi_line_extends_each_single_line": false,
-            "space_before_parenthesis": true
+            "space_before_parenthesis": false
         },
         "comment_to_phpdoc": {
             "ignored_tags": [
@@ -25,7 +26,7 @@
             ]
         },
         "concat_space": false,
-        "curly_braces_position": {
+        "braces_position": {
             "anonymous_classes_opening_brace": "same_line"
         },
         "function_declaration": {
@@ -168,11 +169,8 @@
             ]
         },
         "phpdoc_var_without_name": false,
-        "phpdoc_to_property_type": true,
-        "phpdoc_to_return_type": true,
-        "return_type_declaration": {
-            "space_before": "none"
-        },
+        "phpdoc_to_property_type": false,
+        "phpdoc_to_return_type": false,
         "phpdoc_types_order": {
             "null_adjustment": "always_last"
         },

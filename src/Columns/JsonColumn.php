@@ -29,9 +29,19 @@ class JsonColumn extends TextColumn
 
     protected ModalConfigDto $modalConfig;
 
-    public static function make(string $name): static
+    public static function make(?string $name = null): static
     {
-        $static = parent::make($name);
+        $columnClass = static::class;
+
+        $name ??= static::getDefaultName();
+
+        if (blank($name)) {
+            throw new \Exception("Column of class [$columnClass] must have a unique name, passed to the [make()] method.");
+        }
+
+        $static = app($columnClass, ['name' => $name]);
+        $static->configure();
+
         $static->buttonConfig = ButtonConfigDto::make();
         $static->modalConfig = ModalConfigDto::make();
 

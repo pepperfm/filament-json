@@ -7,10 +7,13 @@ namespace PepperFM\FilamentJson\Tests;
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
 use Filament\Actions\ActionsServiceProvider;
+use Filament\Facades\Filament;
 use Filament\FilamentServiceProvider;
 use Filament\Forms\FormsServiceProvider;
 use Filament\Infolists\InfolistsServiceProvider;
 use Filament\Notifications\NotificationsServiceProvider;
+use Filament\Panel;
+use Filament\PanelRegistry;
 use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
 use Filament\Widgets\WidgetsServiceProvider;
@@ -27,11 +30,20 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            static fn(string $modelName) => 'PepperFM\\FilamentJson\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+            static fn(string $modelName) => 'PepperFM\FilamentJson\Database\Factories\\' . class_basename($modelName) . 'Factory'
         );
+
+        $panel = Panel::make()
+            ->default()
+            ->id('tests')
+            ->path('tests')
+            ->resources([\PepperFM\FilamentJson\Tests\src\Fixtures\UserResource::class]);
+
+        app(PanelRegistry::class)->register($panel);
+        Filament::setCurrentPanel($panel);
     }
 
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [
             ActionsServiceProvider::class,
@@ -47,6 +59,8 @@ class TestCase extends Orchestra
             TablesServiceProvider::class,
             WidgetsServiceProvider::class,
             FilamentJsonServiceProvider::class,
+
+            \PepperFM\FilamentJson\Tests\src\Fixtures\TestPanelProvider::class,
         ];
     }
 
@@ -57,7 +71,13 @@ class TestCase extends Orchestra
 
     public function getEnvironmentSetUp($app): void
     {
-        config()->set('database.default', 'testing');
+        // $app['config']->set('session.driver', 'array');
+        $app['config']->set('database.default', 'testing');
+        $app['config']->set('database.connections.testing', [
+            'driver' => 'sqlite',
+            'database' => ':memory:',
+            'prefix' => '',
+        ]);
         $app['config']->set(
             'view.paths',
             array_merge(
