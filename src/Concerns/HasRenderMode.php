@@ -22,6 +22,7 @@ trait HasRenderMode
         if ($on) {
             $this->renderAs(RenderModeEnum::Tree);
         }
+
         return $this;
     }
 

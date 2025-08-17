@@ -22,6 +22,7 @@ trait HasContainerPresentation
         if ($on) {
             $this->presentIn(ContainerModeEnum::Modal);
         }
+
         return $this;
     }
 
@@ -87,6 +88,8 @@ trait HasContainerPresentation
 
     /**
      * @deprecated Prefer inlineContainer()
+     *
+     * @param bool|\Closure $condition
      */
     public function inline(bool|\Closure $condition = true): static
     {
