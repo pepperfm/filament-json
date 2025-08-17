@@ -34,15 +34,15 @@
         </x-slot>
 
         <div class="fj fj-scope">
-            <table class="fj-table fj-body">
+            <table class="fj-table">
                 <thead>
-                <tr>
-                    <th class="fj-thead-th fj-force-muted w-1/2">{{ $keyColumnLabel }}</th>
-                    <th class="fj-thead-th fj-force-muted w-1/2">{{ $valueColumnLabel }}</th>
-                </tr>
+                    <tr>
+                        <th class="fj-thead-th fj-force-muted w-1/2">{{ $keyColumnLabel }}</th>
+                        <th class="fj-thead-th fj-force-muted w-1/2">{{ $valueColumnLabel }}</th>
+                    </tr>
                 </thead>
 
-                <tbody>
+                <tbody class="fj-body">
                 @foreach ($getState() as $key => $value)
                     <tr class="fj-row">
                         <td class="fj-cell fj-force-fg px-3 py-2">{{ $key }}</td>
