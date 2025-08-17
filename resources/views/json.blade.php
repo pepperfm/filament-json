@@ -21,7 +21,7 @@
 @if($asModal || $asDrawer)
     <x-filament::modal
         :id="$modalConfig->id"
-        :icxon="$modalConfig->icon"
+        :icon="$modalConfig->icon"
         :icon-color="$modalConfig->iconColor"
         :alignment="$modalConfig->alignment"
         :width="$modalConfig->width"
