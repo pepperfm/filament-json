@@ -204,8 +204,8 @@ class JsonColumn extends Column
         return $value;
     }
 
-    /**
-     * @return ?array
+    /*
+     * return ?array
      */
     public function getState(): mixed
     {

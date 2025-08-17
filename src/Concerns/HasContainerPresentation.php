@@ -38,10 +38,6 @@ trait HasContainerPresentation
     public function inlineContainer(bool $on = true): static
     {
         if ($on) {
-            if (method_exists($this, 'inline')) {
-                /** @phpstan-ignore-next-line */
-                parent::inline(true);
-            }
             $this->presentIn(ContainerModeEnum::Inline);
         }
 
@@ -50,7 +46,7 @@ trait HasContainerPresentation
 
     public function getContainerMode(): ContainerModeEnum
     {
-        if (method_exists($this, 'isInline') && $this->isInline()) {
+        if ($this->isInline()) {
             return ContainerModeEnum::Inline;
         }
 
@@ -84,23 +80,6 @@ trait HasContainerPresentation
     public function asDrawer(bool $on = true): static
     {
         return $this->inDrawer($on);
-    }
-
-    /**
-     * @deprecated Prefer inlineContainer()
-     *
-     * @param bool|\Closure $condition
-     */
-    public function inline(bool|\Closure $condition = true): static
-    {
-        /** @phpstan-ignore-next-line */
-        parent::inline($condition);
-
-        if ($this->evaluate($condition)) {
-            $this->presentIn(ContainerModeEnum::Inline);
-        }
-
-        return $this;
     }
 
     /** @deprecated Use isModalContainer() */
