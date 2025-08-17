@@ -160,8 +160,8 @@ $rules = [
         ],
     ],
     'phpdoc_var_without_name' => false,
-    'phpdoc_to_property_type' => true,
-    'phpdoc_to_return_type' => true,
+    'phpdoc_to_property_type' => false,
+    'phpdoc_to_return_type' => false,
     'phpdoc_types_order' => [
         'null_adjustment' => 'always_last',
     ],
@@ -189,7 +189,6 @@ $rules = [
 
     'final_class' => false,
     'final_public_method_for_abstract_class' => false,
-    'self_static_accessor' => false,
     'single_line_comment_style' => [
         'comment_types' => ['hash'],
     ],

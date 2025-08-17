@@ -4,37 +4,34 @@ declare(strict_types=1);
 
 namespace PepperFM\FilamentJson\Tests\src\Fixtures;
 
-use PepperFM\FilamentJson\Tests\src\Models\User;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
-use Filament\Tables;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
+use Filament\Support\Contracts\TranslatableContentDriver;
+use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
+use PepperFM\FilamentJson\Tests\src\Models\User;
 
-class BaseTable extends Component implements HasForms, Tables\Contracts\HasTable
+class BaseTable extends Component implements HasActions, HasSchemas, HasTable
 {
-    use InteractsWithForms;
-    use Tables\Concerns\InteractsWithTable;
+    use InteractsWithActions, InteractsWithSchemas, InteractsWithTable;
 
-    protected function getTableFilters(): array
+    // переводы не нужны в тестах
+    public function makeFilamentTranslatableContentDriver(): ?TranslatableContentDriver
     {
-        return [];
+        return null;
     }
 
-    protected function getTableHeaderActions(): array
+    public function table(Table $table): Table
     {
-        return [];
-    }
-
-    protected function getTableActions(): array
-    {
-        return [];
-    }
-
-    protected function getTableBulkActions(): array
-    {
-        return [];
+        return $table
+            ->query($this->getTableQuery())
+            ->columns([]);
     }
 
     protected function getTableQuery(): Builder
@@ -44,7 +41,7 @@ class BaseTable extends Component implements HasForms, Tables\Contracts\HasTable
 
     protected function shouldPersistTableFiltersInSession(): bool
     {
-        return true;
+        return false;
     }
 
     public function render(): View
