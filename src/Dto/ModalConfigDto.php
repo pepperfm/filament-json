@@ -5,19 +5,21 @@ declare(strict_types=1);
 namespace PepperFM\FilamentJson\Dto;
 
 use Pepperfm\Ssd\BaseDto;
+use Filament\Support\Icons\Heroicon;
+use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\Width;
 
 class ModalConfigDto extends BaseDto
 {
     public ?string $id = null;
 
-    public string $icon = 'heroicon-m-sparkles';
+    public Heroicon $icon = Heroicon::Sparkles;
 
     public string $iconColor = 'primary';
 
-    public string $alignment = 'start';
+    public Alignment $alignment = Alignment::Start;
 
-    public string $width = Width::TwoExtraLarge->value;
+    public Width $width = Width::TwoExtraLarge;
 
     public bool $closeByClickingAway = true;
 
