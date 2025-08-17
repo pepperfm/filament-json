@@ -78,3 +78,35 @@
         opacity: 1 !important;
     }
 }
+
+@layer components {
+    .fj-pair {
+        display: flex;
+        gap: 0.75rem;
+        padding: 0.25rem 0;
+        align-items: flex-start;
+        border-top: 1px solid var(--fj-border);
+    }
+
+    .fj-pair:first-child {
+        border-top-width: 0;
+    }
+
+    .fj-pair-key {
+        min-width: 6rem;
+        font-weight: 600;
+        color: var(--fj-muted);
+    }
+
+    .fj-pair-value {
+        flex: 1 1 auto;
+        color: var(--fj-fg);
+    }
+}
+
+@layer utilities {
+    .fj-code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        white-space: pre-wrap;
+    }
+}
