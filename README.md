@@ -21,10 +21,10 @@ Beautiful JSON viewer column for **Filament v4** tables.
 composer require pepperfm/filament-json:^4.0
 ```
 
-> Previous major versions:
+> Previous major versions For Filament 3:
 >
-> - Filament 3 → `composer require pepperfm/filament-json:^3.0`
-> - Filament 2 → `composer require pepperfm/filament-json:^2.0`
+> - `composer r pepperfm/filament-json:^3.0`
+> - `composer r pepperfm/filament-json:^2.0`
 
 Optionally publish config or views if you want to customize them:
 
