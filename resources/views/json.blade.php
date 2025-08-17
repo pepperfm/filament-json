@@ -64,7 +64,7 @@
         </x-slot>
 
         <div
-            class="fj fj-scope"
+            class="fj fj-scope overflow-x-auto"
             x-data="{
                 raw: @js($stateForJs),
                 async copyJson() {
@@ -122,6 +122,7 @@
                 'items' => $getState(),
                 'depth' => 0,
                 'initiallyCollapsed' => $initiallyCollapsed,
+                'maxDepth' => $maxDepth,
                 'applyLimit' => $applyLimit,
             ])
 

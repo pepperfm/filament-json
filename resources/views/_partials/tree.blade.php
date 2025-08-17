@@ -2,6 +2,7 @@
     'items' => [],
     'depth' => 0,
     'initiallyCollapsed' => 1,
+    'maxDepth' => 3,
     'applyLimit' => null,
 ])
 
@@ -11,7 +12,10 @@
 
 <ul role="tree" class="fj-tree">
     @foreach ($items as $k => $v)
-        @php $hasChildren = is_array($v) || $v instanceof \Illuminate\Contracts\Support\Arrayable; @endphp
+        @php
+            $hasChildren = is_array($v) || $v instanceof \Illuminate\Contracts\Support\Arrayable;
+            $canNestFurther = $hasChildren && ($depth < $maxDepth);
+        @endphp
 
         <li
             role="treeitem"
@@ -23,7 +27,7 @@
             @fj-collapse-all.window="open = false"
         >
             <div class="fj-tree-row" style="--fj-depth: {{ $depth }};">
-                @if ($hasChildren)
+                @if($hasChildren && $canNestFurther)
                     <button type="button" class="fj-tree-toggle" @click="open = !open" aria-label="Toggle">
                         <span class="fj-tree-caret-wrap" :class="{ 'fj-rotate': open }">
                             <x-filament::icon icon="heroicon-m-chevron-right" class="fj-tree-caret"/>
@@ -37,7 +41,11 @@
                 <span class="fj-tree-sep">:</span>
 
                 @if ($hasChildren)
-                    <span class="fj-tree-hint">{{ $isAssoc ? '{…}' : '[…]' }}</span>
+                    @if ($canNestFurther)
+                        <span class="fj-tree-hint">{{ $isAssoc ? '{…}' : '[…]' }}</span>
+                    @else
+                        <span class="fj-force-muted">[Data truncated]</span>
+                    @endif
                 @else
                     <span class="fj-tree-val fj-code">
                         {{ $applyLimit ? $applyLimit($v) : $v }}
@@ -45,13 +53,14 @@
                 @endif
             </div>
 
-            @if ($hasChildren)
+            @if($hasChildren && $canNestFurther)
                 <div x-show="open" x-collapse>
                     <div class="fj-nested">
                         @include('filament-json::_partials.tree', [
                             'items' => $v,
                             'depth' => $depth + 1,
                             'initiallyCollapsed' => $initiallyCollapsed,
+                            'maxDepth' => $maxDepth,
                             'applyLimit' => $applyLimit,
                         ])
                     </div>

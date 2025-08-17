@@ -23,8 +23,8 @@ composer require pepperfm/filament-json:^4.0
 
 > Previous major versions:
 >
-> - Filament 3 → `composer require pepperfm/filament-json:^3.0`
-> - Filament 2 → `composer require pepperfm/filament-json:^2.0`
+> - Filament 4 → `composer require pepperfm/filament-json:^3.0`
+> - Filament 3 → `composer require pepperfm/filament-json:^2.0`
 
 Optionally publish config or views if you want to customize them:
 
@@ -131,13 +131,6 @@ JsonColumn::make('properties')
 - `characterLimit(?int)` — truncate long string values.
 - `getContainerMode()` / `isModalContainer()` / `isDrawerContainer()` / `isInlineContainer()` — container checks.
 
-### Backward-compat helpers (deprecated)
-Kept for smoother migration — prefer the new API:
-- `asModal()` → use `inModal()`
-- `asDrawer()` → use `inDrawer()`
-- `inline()` → use `inlineContainer()`
-- `getAsModal()` / `getAsDrawer()` / `getContainer()` → use `getContainerMode()` or `is*Container()`
-
 ---
 
 ## Migration from v3 → v4
@@ -149,7 +142,7 @@ Kept for smoother migration — prefer the new API:
     - `asModal()` → `inModal()`
     - `asDrawer()` → `inDrawer()`
     - `inline()` → `inlineContainer()`
-    - `getAsModal()/getAsDrawer()/getContainer()` → `getContainerMode()` or `is*Container()`
+    - `getAsModal()/getAsDrawer()/getContainer()` → `getContainerMode()` or `isInlineContainer()`
 - No app-side asset build is required anymore — the package ships compiled CSS.
 
 ### Before (v3)
@@ -226,12 +219,12 @@ use Filament\Support\Icons\Heroicon;
 
 $buttonConfig = literal(
     color: 'primary',
-    size: Width::Medium
+    size: Width::Medium->value
 );
 $modalConfig = [
     'icon' => Heroicon::OutlinedSwatch,
     'alignment' => 'start',
-    'width' => Width::Medium,
+    'width' => Width::Medium->value,
     'closedByEscaping' => true,
     'closed_button' => false, // also accepts camel_case
 ];
@@ -279,7 +272,7 @@ class ModalConfigDto extends \Pepperfm\Ssd\BaseDto
 
     public Alignment $alignment = Alignment::Start;
 
-    public Width $width = Width::TwoExtraLarge;
+    public string $width = Width::TwoExtraLarge->value;
 
     public bool $closeByClickingAway = true;
 

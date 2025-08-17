@@ -26,7 +26,9 @@
                             ])
                         </div>
                     @else
-                        <span class="fj-force-muted">[Data truncated]</span>
+                        <div class="fj-nested">
+                            <span class="fj-force-muted">[Data truncated]</span>
+                        </div>
                     @endif
                 @else
                     <span class="fj-code">{{ $applyLimit ? $applyLimit($nestedValue) : $nestedValue }}</span>

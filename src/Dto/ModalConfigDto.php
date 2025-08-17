@@ -19,7 +19,7 @@ class ModalConfigDto extends BaseDto
 
     public Alignment $alignment = Alignment::Start;
 
-    public Width $width = Width::TwoExtraLarge;
+    public string $width = Width::TwoExtraLarge->value;
 
     public bool $closeByClickingAway = true;
 
