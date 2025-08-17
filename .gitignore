@@ -14,3 +14,4 @@ vendor
 .php_cs
 .phpunit.cache
 bun.lock
+package-lock.json
