@@ -131,13 +131,6 @@ JsonColumn::make('properties')
 - `characterLimit(?int)` — truncate long string values.
 - `getContainerMode()` / `isModalContainer()` / `isDrawerContainer()` / `isInlineContainer()` — container checks.
 
-### Backward-compat helpers (deprecated)
-Kept for smoother migration — prefer the new API:
-- `asModal()` → use `inModal()`
-- `asDrawer()` → use `inDrawer()`
-- `inline()` → use `inlineContainer()`
-- `getAsModal()` / `getAsDrawer()` / `getContainer()` → use `getContainerMode()` or `is*Container()`
-
 ---
 
 ## Migration from v3 → v4
@@ -149,7 +142,7 @@ Kept for smoother migration — prefer the new API:
     - `asModal()` → `inModal()`
     - `asDrawer()` → `inDrawer()`
     - `inline()` → `inlineContainer()`
-    - `getAsModal()/getAsDrawer()/getContainer()` → `getContainerMode()` or `is*Container()`
+    - `getAsModal()/getAsDrawer()/getContainer()` → `getContainerMode()` or `isInlineContainer()`
 - No app-side asset build is required anymore — the package ships compiled CSS.
 
 ### Before (v3)
