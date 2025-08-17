@@ -18,7 +18,7 @@ class ButtonConfigDto extends BaseDto
 
     public ?string $tooltip = null;
 
-    public Width $size = Width::Medium;
+    public string $size = Width::Medium->value;
 
     public ?string $href = null;
 
