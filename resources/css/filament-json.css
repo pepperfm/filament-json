@@ -7,10 +7,12 @@
 /* variables scopes ====== */
 @layer utilities {
     .fj-scope {
-        --fj-fg: var(--fi-color-foreground, #111827); /* gray-900 */
-        --fj-muted: var(--fi-color-muted-foreground, #374151); /* gray-700 */
-        --fj-border: var(--fi-color-border, #e5e7eb); /* gray-200 */
+        --fj-fg: var(--fi-color-foreground, #111827);
+        --fj-muted: var(--fi-color-muted-foreground, #374151);
+        --fj-border: var(--fi-color-border, #e5e7eb);
         --fj-surface: var(--fi-color-surface, #ffffff);
+
+        --fj-border-strong: color-mix(in srgb, var(--fj-border), var(--fj-fg) 14%);
     }
 }
 
@@ -63,8 +65,35 @@
     .fj-nested .fj-nested {
         @apply mt-2 rounded-md;
     }
+}
 
-    /* чуть мягче на глубине */
+/* table grid lines */
+@layer components {
+    .fj-table {
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .fj-body .fj-row + .fj-row .fj-cell {
+        border-top: 1px solid var(--fj-border-strong);
+    }
+
+    .fj-row > .fj-cell + .fj-cell {
+        border-inline-start: 1px solid var(--fj-border-strong);
+    }
+
+    .fj-nested {
+        border: 1px solid var(--fj-border-strong);
+        background-color: var(--fj-surface);
+    }
+
+    .fj-pair {
+        border-top: 1px solid var(--fj-border-strong);
+    }
+
+    .fj-pair:first-child {
+        border-top-width: 0;
+    }
 }
 
 @layer utilities {

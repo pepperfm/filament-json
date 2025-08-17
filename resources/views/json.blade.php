@@ -34,7 +34,7 @@
         </x-slot>
 
         <div class="fj fj-scope">
-            <table class="fj-table">
+            <table class="fj-table fj-body">
                 <thead>
                 <tr>
                     <th class="fj-thead-th fj-force-muted w-1/2">{{ $keyColumnLabel }}</th>

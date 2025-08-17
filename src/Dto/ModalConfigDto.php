@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PepperFM\FilamentJson\Dto;
 
 use Pepperfm\Ssd\BaseDto;
+use Filament\Support\Enums\Width;
 
 class ModalConfigDto extends BaseDto
 {
@@ -16,7 +17,7 @@ class ModalConfigDto extends BaseDto
 
     public string $alignment = 'start';
 
-    public string $width = 'xl';
+    public string $width = Width::TwoExtraLarge->value;
 
     public bool $closeByClickingAway = true;
 
