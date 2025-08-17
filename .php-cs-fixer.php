@@ -189,7 +189,6 @@ $rules = [
 
     'final_class' => false,
     'final_public_method_for_abstract_class' => false,
-    'self_static_accessor' => false,
     'single_line_comment_style' => [
         'comment_types' => ['hash'],
     ],

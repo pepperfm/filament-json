@@ -2,6 +2,7 @@
     'items' => [],
     'depth' => 1,
     'maxDepth' => 3,
+    'applyLimit' => null,
 ])
 
 @php
@@ -21,13 +22,14 @@
                                 'items' => $nestedValue,
                                 'depth' => $depth + 1,
                                 'maxDepth' => $maxDepth,
+                                'applyLimit' => $applyLimit,
                             ])
                         </div>
                     @else
                         <span class="fj-force-muted">[Data truncated]</span>
                     @endif
                 @else
-                    <span class="fj-code">{{ $applyLimit($nestedValue) }}</span>
+                    <span class="fj-code">{{ $applyLimit ? $applyLimit($nestedValue) : $nestedValue }}</span>
                 @endif
             </div>
         </div>
