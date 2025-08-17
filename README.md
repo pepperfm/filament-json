@@ -193,9 +193,8 @@ If you test rendering, switch to Filament v4’s **List** resource page approach
 
 ## Version matrix
 
-- Filament **4.x** → `pepperfm/filament-json:^4.0`
-- Filament **3.x** → `pepperfm/filament-json:^3.0`
-- Filament **2.x** → `pepperfm/filament-json:^2.0`
+- Filament **4.x** → `pepperfm/filament-json:^4.0` && `pepperfm/filament-json:^3.0`
+- Filament **3.x** → `pepperfm/filament-json:^2.0`
 
 Your existing constraints like `^2.x` or `^3.x` will continue to resolve to the proper major — v4 won’t auto-install unless you opt in.
 
