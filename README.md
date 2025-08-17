@@ -17,6 +17,8 @@ Beautiful JSON viewer column for **Filament v4** tables.
 
 ## Installation
 
+### [Documentation on my doc. website](https://docs.pepperfm.com/filament-json)
+
 ```bash
 composer require pepperfm/filament-json:^4.0
 ```
