@@ -13,5 +13,12 @@ testbench.yaml
 vendor
 .php_cs
 .phpunit.cache
+
+.claude
+.codex
+.agents
+.junie
+.mcp.json
+.ai-factory*
 bun.lock
 package-lock.json

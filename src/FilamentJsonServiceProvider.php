@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace PepperFM\FilamentJson;
 
-use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Asset;
 use Filament\Support\Assets\Css;
-use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Filesystem\Filesystem;
@@ -47,15 +45,12 @@ class FilamentJsonServiceProvider extends PackageServiceProvider
         if (file_exists($package->basePath("/../config/$configFileName.php"))) {
             $package->hasConfigFile();
         }
-
         if (file_exists($package->basePath('/../database/migrations'))) {
             $package->hasMigrations($this->getMigrations());
         }
-
         if (file_exists($package->basePath('/../resources/lang'))) {
             $package->hasTranslations();
         }
-
         if (file_exists($package->basePath('/../resources/views'))) {
             $package->hasViews(static::$viewNamespace);
         }
