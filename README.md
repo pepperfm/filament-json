@@ -1,11 +1,11 @@
-# Filament JSON Column (v4)
+# Filament JSON Column (v5)
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/pepperfm/filament-json.svg?style=flat-square)](https://packagist.org/packages/pepperfm/filament-json)
 [![Tests](https://img.shields.io/github/actions/workflow/status/pepperfm/filament-json/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/pepperfm/filament-json/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![Code Style](https://img.shields.io/github/actions/workflow/status/pepperfm/filament-json/fix-php-code-styling.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/pepperfm/filament-json/actions?query=workflow%3A%22Fix+PHP+code+styling%22+branch%3Amain)
 [![Downloads](https://img.shields.io/packagist/dt/pepperfm/filament-json.svg?style=flat-square)](https://packagist.org/packages/pepperfm/filament-json)
 
-Beautiful JSON viewer column for **Filament v4** tables.
+Beautiful JSON viewer column for **Filament v5** tables.
 
 - **Render modes:** Tree / Table  
 - **Presentation modes:** Inline / Modal / Drawer  
@@ -20,13 +20,13 @@ Beautiful JSON viewer column for **Filament v4** tables.
 ### [Documentation on my doc. website](https://docs.pepperfm.com/filament-json)
 
 ```bash
-composer require pepperfm/filament-json:^4.0
+composer r pepperfm/filament-json:^5.0
 ```
 
 > Previous major versions:
 >
-> - Filament 4 → `composer require pepperfm/filament-json:^3.0`
-> - Filament 3 → `composer require pepperfm/filament-json:^2.0`
+> - Filament 4 → `composer r pepperfm/filament-json:^4.0` or `^3.0`
+> - Filament 3 → `composer r pepperfm/filament-json:^2.0`
 
 Optionally publish config or views if you want to customize them:
 
@@ -135,6 +135,23 @@ JsonColumn::make('properties')
 
 ---
 
+## Migration from v4 → v5
+
+Filament v5 has no breaking API changes — it adds Livewire v4 support. The upgrade is straightforward:
+
+```bash
+composer require pepperfm/filament-json:^5.0
+```
+
+No code changes required. All existing `JsonColumn` configuration works as-is.
+
+**Requirements:**
+- PHP 8.2+
+- Laravel 11.28+ or 12+
+- Filament 5.x
+
+---
+
 ## Migration from v3 → v4
 
 ### TL;DR
@@ -195,10 +212,11 @@ If you test rendering, switch to Filament v4’s **List** resource page approach
 
 ## Version matrix
 
-- Filament **4.x** → `pepperfm/filament-json:^4.0` && `pepperfm/filament-json:^3.0`
+- Filament **5.x** → `pepperfm/filament-json:^5.0`
+- Filament **4.x** → `pepperfm/filament-json:^4.0` or `^3.0`
 - Filament **3.x** → `pepperfm/filament-json:^2.0`
 
-Your existing constraints like `^2.x` or `^3.x` will continue to resolve to the proper major — v4 won’t auto-install unless you opt in.
+Your existing constraints like `^3.x` or `^4.x` will continue to resolve to the proper major — v5 won’t auto-install unless you opt in.
 
 ---
 

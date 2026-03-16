@@ -3,14 +3,14 @@
 > Project map for AI agents. Keep this file up-to-date as the project evolves.
 
 ## Project Overview
-Filament v4 plugin for Laravel that provides a `JsonColumn` table column for displaying JSON data as tree or table views in drawers, modals, or inline containers.
+Filament v5 plugin for Laravel that provides a `JsonColumn` table column for displaying JSON data as tree or table views in drawers, modals, or inline containers.
 
 ## Tech Stack
 - **Language:** PHP 8.2+
 - **Framework:** Laravel (package via spatie/laravel-package-tools)
-- **UI Framework:** Filament v4
+- **UI Framework:** Filament v5
 - **DTO Base:** pepperfm/ssd-for-laravel
-- **Testing:** Pest v3 with Livewire plugin, Orchestra Testbench
+- **Testing:** Pest v4 with Livewire plugin, Orchestra Testbench
 - **Static Analysis:** PHPStan / Larastan
 - **Code Style:** Laravel Pint + PHP CS Fixer
 

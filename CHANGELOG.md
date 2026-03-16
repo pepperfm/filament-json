@@ -1,5 +1,14 @@
 # Changelog
 
+## 5.0.0 - 2026-03-16
+
+### Filament v5 / Livewire v4 compatibility
+
+- Bumped `filament/filament` to `^5.0` (Livewire v4 support)
+- Bumped `pepperfm/ssd-for-laravel` to `^0.2`
+- Updated CI matrix: added PHP 8.4, Laravel 12, dropped Laravel 10
+- No breaking API changes — all existing `JsonColumn` configuration works as-is
+
 ## 2.0.0 - 22-03-2025
 
 ### Added feature to display nested data with maxDepth = 2
