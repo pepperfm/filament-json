@@ -1,8 +1,8 @@
 # Filament JSON Column (v5)
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/pepperfm/filament-json.svg?style=flat-square)](https://packagist.org/packages/pepperfm/filament-json)
-[![Tests](https://img.shields.io/github/actions/workflow/status/pepperfm/filament-json/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/pepperfm/filament-json/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![Code Style](https://img.shields.io/github/actions/workflow/status/pepperfm/filament-json/fix-php-code-styling.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/pepperfm/filament-json/actions?query=workflow%3A%22Fix+PHP+code+styling%22+branch%3Amain)
+[![Tests](https://img.shields.io/github/actions/workflow/status/pepperfm/filament-json/run-tests.yml?branch=5.x&label=tests&style=flat-square)](https://github.com/pepperfm/filament-json/actions/workflows/run-tests.yml?query=branch%3A5.x)
+[![Code Style](https://img.shields.io/github/actions/workflow/status/pepperfm/filament-json/fix-php-code-styling.yml?branch=5.x&label=code%20style&style=flat-square)](https://github.com/pepperfm/filament-json/actions/workflows/fix-php-code-styling.yml?query=branch%3A5.x)
 [![Downloads](https://img.shields.io/packagist/dt/pepperfm/filament-json.svg?style=flat-square)](https://packagist.org/packages/pepperfm/filament-json)
 
 Beautiful JSON viewer column for **Filament v5** tables.
