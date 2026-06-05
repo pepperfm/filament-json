@@ -195,7 +195,7 @@ class JsonColumn extends Column
      *
      * @return array|string|null
      */
-    public function applyLimit(null|array|string $value): null|array|string
+    public function applyLimit(array|string|null $value): array|string|null
     {
         if (is_string($value) && $this->characterLimit) {
             return str($value)->limit($this->characterLimit)->value();

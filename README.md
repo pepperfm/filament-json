@@ -206,7 +206,7 @@ JsonColumn::make('properties')
 ```
 
 ### Testing adjustments
-If you test rendering, switch to Filament v4’s **List** resource page approach (per Filament’s docs) and ensure session/error bags are initialized in your test case to avoid `ViewErrorBag` null issues.
+If you test rendering, use a Filament **List** resource page fixture and ensure session/error bags are initialized in your test case to avoid `ViewErrorBag` null issues.
 
 ---
 
@@ -249,7 +249,7 @@ $modalConfig = [
 ];
 
 JsonColumn::make('properties')
-    ->asModal()
+    ->inModal()
     ->button($buttonConfig)
     ->modal($modalConfig);
 ```
@@ -268,7 +268,7 @@ class ButtonConfigDto extends \Pepperfm\Ssd\BaseDto
 
     public ?string $tooltip = null;
 
-    public Width $size = Width::Medium;
+    public string $size = Width::Medium->value;
 
     public ?string $href = null;
 
@@ -307,10 +307,13 @@ class ModalConfigDto extends \Pepperfm\Ssd\BaseDto
 
 ## Testing
 
-Skipped for now
+```bash
+composer test
+composer analyse
+composer lint
+```
 
-[//]: # (- Livewire tests follow the Filament v4 approach &#40;resource list page&#41;.)
-[//]: # (- The package’s TestCase initializes session/error bags to avoid null ViewErrorBag issues.)
+The test suite uses Pest v4, Orchestra Testbench, and Filament resource fixtures to cover the column API and package integration points.
 
 ---
 

@@ -19,6 +19,7 @@ vendor
 .agents
 .junie
 .mcp.json
-.ai-factory*
-bun.lock
+.ai-factory.json
 package-lock.json
+
+.env

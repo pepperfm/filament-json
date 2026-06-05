@@ -3,8 +3,6 @@
     use PepperFM\FilamentJson\Enums\ContainerModeEnum;
 
     $characterLimit = $getCharacterLimit();
-    $asModal = $getAsModal();
-    $asDrawer = $getAsDrawer();
 
     $keyColumnLabel = $getKeyColumnLabel();
     $valueColumnLabel = $getValueColumnLabel();
@@ -30,16 +28,18 @@
 
     $stateForJs = $getState();
 
-    /** @var ContainerModeEnum|null $containerMode */
-    $containerMode = method_exists($this, 'getContainerMode') ? $this->getContainerMode() : null;
-    $isInlineContainer = $containerMode === ContainerModeEnum::Inline;
+    /** @var ContainerModeEnum $containerMode */
+    $containerMode = $getContainerMode();
+    $isModalContainer = $containerMode === ContainerModeEnum::Modal;
+    $isDrawerContainer = $containerMode === ContainerModeEnum::Drawer;
+    $isModalOrDrawerContainer = $isModalContainer || $isDrawerContainer;
 
     $rawJson = is_string($stateForJs)
         ? $stateForJs
         : json_encode($stateForJs, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 @endphp
 
-@if ($asModal || $asDrawer)
+@if ($isModalOrDrawerContainer)
     <x-filament::modal
         :id="$modalConfig->id"
         :icon="$modalConfig->icon"
@@ -49,7 +49,7 @@
         :close-by-clicking-away="$modalConfig->closeByClickingAway"
         :close-by-escaping="$modalConfig->closedByEscaping"
         :close-button="$modalConfig->closedButton"
-        :slide-over="$asDrawer && !$asModal"
+        :slide-over="$isDrawerContainer"
     >
         <x-slot name="trigger">
             <x-filament::icon-button

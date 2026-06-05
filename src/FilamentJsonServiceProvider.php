@@ -34,8 +34,6 @@ class FilamentJsonServiceProvider extends PackageServiceProvider
             ->hasInstallCommand(static function (InstallCommand $command): void {
                 $command
                     ->publishConfigFile()
-                    ->publishMigrations()
-                    ->askToRunMigrations()
                     ->askToStarRepoOnGitHub('pepperfm/filament-json');
             });
 
@@ -44,9 +42,6 @@ class FilamentJsonServiceProvider extends PackageServiceProvider
 
         if (file_exists($package->basePath("/../config/$configFileName.php"))) {
             $package->hasConfigFile();
-        }
-        if (file_exists($package->basePath('/../database/migrations'))) {
-            $package->hasMigrations($this->getMigrations());
         }
         if (file_exists($package->basePath('/../resources/lang'))) {
             $package->hasTranslations();
@@ -138,15 +133,5 @@ class FilamentJsonServiceProvider extends PackageServiceProvider
     protected function getScriptData(): array
     {
         return [];
-    }
-
-    /**
-     * @return array<string>
-     */
-    protected function getMigrations(): array
-    {
-        return [
-            'create_filament-json_table',
-        ];
     }
 }
