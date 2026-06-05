@@ -7,6 +7,13 @@ use PepperFM\FilamentJson\Enums\ContainerModeEnum;
 use PepperFM\FilamentJson\Enums\RenderModeEnum;
 use PepperFM\FilamentJson\Dto\ButtonConfigDto;
 use PepperFM\FilamentJson\Dto\ModalConfigDto;
+use Livewire\Livewire;
+use PepperFM\FilamentJson\Tests\src\Fixtures\ComputedStateJsonTable;
+use PepperFM\FilamentJson\Tests\src\Fixtures\DrawerTreeJsonTable;
+use PepperFM\FilamentJson\Tests\src\Fixtures\InlineJsonTable;
+use PepperFM\FilamentJson\Tests\src\Fixtures\ModalTableJsonTable;
+use PepperFM\FilamentJson\Tests\src\Fixtures\RawJsonStringTable;
+use PepperFM\FilamentJson\Tests\src\Models\User;
 
 test('it creates column with default settings', function (): void {
     $column = JsonColumn::make('properties');
@@ -99,8 +106,71 @@ test('it applies character limit to strings', function (): void {
 
     expect($column->applyLimit('short'))->toBe('short')
         ->and($column->applyLimit('this is a very long string'))->toBe('this is a...')
-        ->and($column->applyLimit(null))->toBeNull()
+        ->and($column->applyLimit(null))->toBe('null')
+        ->and($column->applyLimit(false))->toBe('false')
+        ->and($column->applyLimit(true))->toBe('true')
+        ->and($column->applyLimit(0))->toBe(0)
         ->and($column->applyLimit(['array']))->toBe(['array']);
+});
+
+test('it normalizes state without dropping valid falsy values', function (): void {
+    $column = JsonColumn::make('data');
+
+    expect(normalizeJsonColumnState($column, [
+        'null' => null,
+        'false' => false,
+        'zero' => 0,
+        'string_zero' => '0',
+        'empty_string' => '',
+    ]))->toBe([
+        'false' => false,
+        'zero' => 0,
+        'string_zero' => 0,
+        'empty_string' => '',
+    ]);
+});
+
+test('it can keep null values when nullable filtering is disabled', function (): void {
+    $column = JsonColumn::make('data')->filterNullable(false);
+
+    expect(normalizeJsonColumnState($column, [
+        'null' => null,
+        'false' => false,
+        'zero' => 0,
+    ]))->toBe([
+        'null' => null,
+        'false' => false,
+        'zero' => 0,
+    ]);
+});
+
+test('it decodes valid json strings and keeps invalid strings unchanged', function (): void {
+    $column = JsonColumn::make('data');
+
+    expect(normalizeJsonColumnState($column, '{"alpha":0,"flag":false,"nested":{"label":"kept"}}'))->toBe([
+        'alpha' => 0,
+        'flag' => false,
+        'nested' => [
+            'label' => 'kept',
+        ],
+    ])->and(normalizeJsonColumnState($column, 'not-json'))->toBe('not-json');
+});
+
+test('it converts arrayable values recursively', function (): void {
+    $column = JsonColumn::make('data');
+
+    expect(normalizeJsonColumnState($column, collect([
+        'nested' => collect([
+            'zero' => 0,
+            'false' => false,
+            'null' => null,
+        ]),
+    ])))->toBe([
+        'nested' => [
+            'zero' => 0,
+            'false' => false,
+        ],
+    ]);
 });
 
 test('it accepts button config', function (): void {
@@ -136,3 +206,105 @@ test('maxDepth enforces minimum of 1', function (): void {
 
     expect($column->getMaxDepth())->toBe(1);
 });
+
+test('inline rendering shows pretty json with falsy scalar values', function (): void {
+    User::query()->create([
+        'name' => 'Inline User',
+        'email' => 'inline@example.test',
+        'properties' => [
+            'zero' => 0,
+            'false' => false,
+            'text' => 'visible',
+            'null' => null,
+        ],
+    ]);
+
+    Livewire::test(InlineJsonTable::class)
+        ->assertSee('"zero": 0')
+        ->assertSee('"false": false')
+        ->assertSee('"text": "visible"')
+        ->assertDontSee('"null": null');
+});
+
+test('drawer tree rendering shows decoded json structure and toolbar actions', function (): void {
+    User::query()->create([
+        'name' => 'Tree User',
+        'email' => 'tree@example.test',
+        'properties' => [
+            'zero' => 0,
+            'false' => false,
+            'nested' => [
+                'label' => 'visible',
+            ],
+        ],
+    ]);
+
+    Livewire::test(DrawerTreeJsonTable::class)
+        ->assertSee('Expand all')
+        ->assertSee('Collapse all')
+        ->assertSee('Copy JSON')
+        ->assertSee('zero')
+        ->assertSee('false')
+        ->assertSee('visible');
+});
+
+test('modal table rendering shows custom labels and nested values', function (): void {
+    User::query()->create([
+        'name' => 'Table User',
+        'email' => 'table@example.test',
+        'properties' => [
+            'zero' => 0,
+            'false' => false,
+            'nested' => [
+                'label' => 'visible',
+            ],
+        ],
+    ]);
+
+    Livewire::test(ModalTableJsonTable::class)
+        ->assertSee('Property')
+        ->assertSee('Payload')
+        ->assertSee('zero')
+        ->assertSee('false')
+        ->assertSee('nested')
+        ->assertSee('visible');
+});
+
+test('rendering supports raw json strings from filament state callbacks', function (): void {
+    User::query()->create([
+        'name' => 'Raw User',
+        'email' => 'raw@example.test',
+        'properties' => [],
+    ]);
+
+    Livewire::test(RawJsonStringTable::class)
+        ->assertSee('raw')
+        ->assertSee('flag')
+        ->assertSee('nested')
+        ->assertSee('kept');
+});
+
+test('rendering preserves filament state callbacks and defaults', function (): void {
+    User::query()->create([
+        'name' => 'Computed User',
+        'email' => 'computed@example.test',
+        'properties' => [],
+    ]);
+
+    Livewire::test(ComputedStateJsonTable::class)
+        ->assertSee('from_state_callback')
+        ->assertSee('true')
+        ->assertSee('zero')
+        ->assertSee('false')
+        ->assertSee('from_default')
+        ->assertSee('fallback')
+        ->assertDontSee('>null<', escape: false);
+});
+
+function normalizeJsonColumnState(JsonColumn $column, mixed $state): mixed
+{
+    $method = new ReflectionMethod($column, 'normalizeState');
+    $method->setAccessible(true);
+
+    return $method->invoke($column, $state);
+}

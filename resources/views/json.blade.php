@@ -27,6 +27,7 @@
     $showCopy = $copyJsonAction;
 
     $stateForJs = $getState();
+    $displayState = is_array($stateForJs) ? $stateForJs : ['value' => $stateForJs];
 
     /** @var ContainerModeEnum $containerMode */
     $containerMode = $getContainerMode();
@@ -34,9 +35,7 @@
     $isDrawerContainer = $containerMode === ContainerModeEnum::Drawer;
     $isModalOrDrawerContainer = $isModalContainer || $isDrawerContainer;
 
-    $rawJson = is_string($stateForJs)
-        ? $stateForJs
-        : json_encode($stateForJs, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    $rawJson = $getJsonForCopy();
 @endphp
 
 @if ($isModalOrDrawerContainer)
@@ -66,18 +65,14 @@
         <div
             class="fj fj-scope overflow-x-auto"
             x-data="{
-                raw: @js($stateForJs),
+                text: @js($rawJson),
                 async copyJson() {
-                    const text = typeof this.raw === 'string'
-                        ? this.raw
-                        : JSON.stringify(this.raw, null, 2);
-
                     try {
                         if (navigator.clipboard && (location.protocol === 'https:' || location.hostname === 'localhost')) {
-                            await navigator.clipboard.writeText(text);
+                            await navigator.clipboard.writeText(this.text);
                         } else {
                             const ta = document.createElement('textarea');
-                            ta.value = text;
+                            ta.value = this.text;
                             ta.style.position = 'fixed';
                             ta.style.inset = '0';
                             document.body.appendChild(ta);
@@ -119,7 +114,7 @@
             @endif
 
             @includeWhen($renderMode === RenderModeEnum::Tree, 'filament-json::_partials.tree', [
-                'items' => $getState(),
+                'items' => $displayState,
                 'depth' => 0,
                 'initiallyCollapsed' => $initiallyCollapsed,
                 'maxDepth' => $maxDepth,
@@ -135,11 +130,11 @@
                     </tr>
                     </thead>
                     <tbody class="fj-body">
-                    @foreach ($getState() as $key => $value)
+                    @foreach ($displayState as $key => $value)
                         <tr class="fj-row">
                             <td class="fj-cell px-3 py-2">{{ $key }}</td>
                             <td class="fj-cell">
-                                @if (is_array($value) || $value instanceof \Illuminate\Contracts\Support\Arrayable)
+                                @if (is_array($value))
                                     <div class="fj-nested">
                                         @include('filament-json::_partials.nested', [
                                             'items' => $value,

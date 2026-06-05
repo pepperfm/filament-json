@@ -6,7 +6,6 @@ namespace PepperFM\FilamentJson\Columns;
 
 use Filament\Tables\Columns\Column;
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Support\Collection;
 use PepperFM\FilamentJson\Dto\ButtonConfigDto;
 use PepperFM\FilamentJson\Dto\ModalConfigDto;
 use PepperFM\FilamentJson\Concerns\HasRenderMode;
@@ -191,47 +190,82 @@ class JsonColumn extends Column
     /* Runtime helpers */
 
     /**
-     * @param array|string|null $value
+     * @param mixed $value
      *
-     * @return array|string|null
+     * @return mixed
      */
-    public function applyLimit(array|string|null $value): array|string|null
+    public function applyLimit(mixed $value): mixed
     {
         if (is_string($value) && $this->characterLimit) {
             return str($value)->limit($this->characterLimit)->value();
         }
+        if (is_bool($value)) {
+            return $value ? 'true' : 'false';
+        }
 
-        return $value;
+        return $value ?? 'null';
     }
 
-    /*
-     * return ?array
-     */
     public function getState(): mixed
     {
-        if (!$this->getRecord()) {
-            return null;
+        return $this->normalizeState(parent::getState());
+    }
+
+    public function getJsonForCopy(): string
+    {
+        $state = parent::getState();
+
+        if (is_string($state)) {
+            try {
+                return $this->encodeJson($this->normalizeState(
+                    json_decode($state, associative: true, flags: JSON_THROW_ON_ERROR)
+                ));
+            } catch (\JsonException) {
+                return $state;
+            }
         }
 
-        // Prefer Filament's record state resolution
-        $state = $this->getStateFromRecord();
+        return $this->encodeJson($this->normalizeState($state));
+    }
 
-        if (blank($state)) {
-            return [];
+    protected function normalizeState(mixed $state): mixed
+    {
+        if (is_string($state)) {
+            $state = $this->decodeJsonString($state);
+        }
+        if ($state instanceof Arrayable) {
+            $state = $state->toArray();
+        }
+        if (!is_array($state)) {
+            return $state;
         }
 
-        if ($state instanceof Collection) {
-            return $state
-                ->when($this->filterNullable, static fn(Collection $c) => $c->filter())
-                ->all();
+        $normalized = [];
+
+        foreach ($state as $key => $value) {
+            if ($this->filterNullable && $value === null) {
+                continue;
+            }
+
+            $normalized[$key] = $this->normalizeState($value);
         }
 
-        if (is_array($state)) {
-            return collect($state)
-                ->when($this->filterNullable, static fn($c) => $c->filter())
-                ->all();
-        }
+        return $normalized;
+    }
 
-        return $state;
+    protected function decodeJsonString(string $state): mixed
+    {
+        try {
+            return json_decode($state, associative: true, flags: JSON_THROW_ON_ERROR);
+        } catch (\JsonException) {
+            return $state;
+        }
+    }
+
+    protected function encodeJson(mixed $state): string
+    {
+        $encoded = json_encode($state, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+        return $encoded === false ? '' : $encoded;
     }
 }

@@ -14,12 +14,15 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\MessageBag;
 use Livewire\Component;
 use PepperFM\FilamentJson\Tests\src\Models\User;
 
 class BaseTable extends Component implements HasActions, HasSchemas, HasTable
 {
     use InteractsWithActions, InteractsWithSchemas, InteractsWithTable;
+
+    protected ?MessageBag $errorBag = null;
 
     // переводы не нужны в тестах
     public function makeFilamentTranslatableContentDriver(): ?TranslatableContentDriver
@@ -47,5 +50,15 @@ class BaseTable extends Component implements HasActions, HasSchemas, HasTable
     public function render(): View
     {
         return view('columns.fixtures.table');
+    }
+
+    public function getErrorBag(): MessageBag
+    {
+        return $this->errorBag ??= new MessageBag();
+    }
+
+    public function setErrorBag($bag)
+    {
+        $this->errorBag = $bag instanceof MessageBag ? $bag : new MessageBag($bag);
     }
 }

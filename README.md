@@ -85,9 +85,12 @@ JsonColumn::make('properties')
 
 - **Inline** container always renders a **pretty-printed raw JSON block** directly in the cell.  
   Click the block (or press Enter/Space when focused) to copy JSON to clipboard.
+- Raw JSON strings are decoded when they contain valid JSON, so string database values such as
+  `{"key":"value"}` can still render as structured Tree/Table content.
 - **Expand/Collapse** buttons only appear in **Tree** mode, and only for **Modal/Drawer**.
 - `maxDepth(int)` controls nesting depth rendering in **Table** mode.
-- `filterNullable(true)` filters out null/empty values from arrays/collections.
+- `filterNullable(true)` filters out `null` values from arrays/collections.
+  It preserves valid JSON falsy values like `false`, `0`, `"0"`, and empty strings.
 - `characterLimit(?int)` truncates long string scalars.
 
 ---
@@ -129,7 +132,7 @@ JsonColumn::make('properties')
 - `copyJsonAction(bool $on = true)` — toggle Copy JSON button (modal/drawer).
 - `keyColumnLabel(string)`, `valueColumnLabel(string)` — Table headers.
 - `maxDepth(int)` — nesting limit for Table mode nested blocks.
-- `filterNullable(bool)` — filter out null/empty values.
+- `filterNullable(bool)` — filter out `null` values while preserving falsy JSON scalars.
 - `characterLimit(?int)` — truncate long string values.
 - `getContainerMode()` / `isModalContainer()` / `isDrawerContainer()` / `isInlineContainer()` — container checks.
 
@@ -224,6 +227,14 @@ Your existing constraints like `^3.x` or `^4.x` will continue to resolve to the 
 
 The package ships a compiled CSS with soft borders, proper light/dark palette, and table grid lines.  
 If you publish views and manually tweak Tailwind, ensure your scanner includes the package views (e.g. `resources/views/vendor/filament-json/**/*.blade.php`).
+
+---
+
+## Package extension points
+
+The package keeps a small facade target, an empty publishable config file, and a Livewire testing
+mixin registration for backward compatibility and future package-level helpers. The primary public
+API remains `JsonColumn::make(...)->...`.
 
 ---
 
@@ -326,6 +337,8 @@ See the GitHub Releases page for a full changelog per version.
 ## Security
 
 If you discover any security-related issues, please email the maintainer instead of using the issue tracker.
+When debugging host-application data, avoid logging raw JSON payloads unless you have reviewed them
+for secrets or personal data.
 
 ---
 

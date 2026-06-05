@@ -200,7 +200,7 @@ $rules = [
         'exclude' => [
             'json_encode', 'json_decode', 'in_array', 'is_array', 'is_int',
             'is_string', 'is_null', 'count', 'strlen', 'array_key_exists', 'array_slice',
-            'get_class', 'func_get_args', 'call_user_func',
+            'get_class', 'func_get_args', 'call_user_func', 'is_bool',
         ],
     ],
     'native_constant_invocation' => [
