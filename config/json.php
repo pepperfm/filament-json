@@ -9,5 +9,4 @@ declare(strict_types=1);
  * file remains publishable for backward compatibility with the package
  * installer and existing host applications.
  */
-return [
-];
+return [];
